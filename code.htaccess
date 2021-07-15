@@ -1,0 +1,60 @@
+#file to run first
+
+DirectoryIndex index.html index.php
+
+
+#Error Document
+
+ErrorDocument 404 /htaccess/errors/errors_404.html
+ErrorDocument 403 /htaccess/errors/errors_403.html
+
+
+
+#To Protact Files and not Show dircetory
+
+Options -Indexes
+Options +Indexes
+
+
+#Hide File directory Browsing (Suppose we protect extension file like jpg, pdf etc)
+
+IndexIgnore *.pdf *.jpg *.png *.html
+
+
+#================ NEW METHOD ================
+
+#http to https redirection
+RewriteEngine On 
+RewriteCond %{HTTPS} off 
+RewriteRule (.*) https://teambrahm.com%{REQUEST_URI}
+
+
+#Script
+
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?/$1 [L]
+
+
+#Localhost 
+
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^([^\.]+)$ $1.php [NC,L]
+
+
+#Html
+
+RewriteEngine on 
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.html -f
+RewriteRule ^(.*)$ $1.html [NC,L]
+
+
+#Php
+
+RewriteEngine on
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.php -f
+RewriteRule ^(.*)$ $1.php [NC,L] 
